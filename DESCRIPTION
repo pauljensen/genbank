@@ -1,0 +1,14 @@
+Package: genbank
+Type: Package
+Title: Parse GenBank flat files
+Version: 0.0
+Date: 2015-08-02
+Author: Paul Jensen
+Maintainer: Paul Jensen <paul.jensen@bc.edu>
+Description: Parse GenBank flat files and extract sequence features.
+License: GPL (>= 2)
+Imports:
+  pryr
+Depends:
+  stringr,
+  magrittr
