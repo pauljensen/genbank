@@ -8,7 +8,7 @@ Maintainer: Paul Jensen <paul.jensen@bc.edu>
 Description: Parse GenBank flat files and extract sequence features.
 License: GPL (>= 2)
 Imports:
-  pryr
-Depends:
-  stringr,
-  magrittr
+  Biostrings,
+  magrittr,
+  pryr,
+  stringr

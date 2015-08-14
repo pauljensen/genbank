@@ -59,7 +59,10 @@ parse_keyword_group <- function(group) {
 # Parse a origin character vector into a DNAString object.
 parse_origin <- function(origin) {
   # use origin[-1] to remove keyword line
-  DNAString(paste0(str_replace_all(origin[-1], "\\s|\\d", ""), collapse=""))
+  origin[-1] %>%
+    str_replace_all("\\s|\\d", "") %>%
+    paste0(collapse="") %>%
+    Biostrings::DNAString()
 }
 
 # Parse a feature character vector in a list of features.
@@ -68,7 +71,7 @@ parse_features <- function(features) {
   
   parse_feature <- function(lines) {
     header <- lines[1]
-    lines <- substr(lines[-1], 22, nchar(lines[-1]))  # remove leadering ws
+    lines <- substr(lines[-1], 22, nchar(lines[-1]))  # remove leading ws
     key <- str_trim(substr(header, 6, 21))
     location_str <- str_trim(substr(header, 22, nchar(header)))
     location <- parse_location(location_str)
@@ -101,7 +104,7 @@ parse_genbank <- function(file) {
   }
   
   groups <- split_by_indent(lines)
-  names(groups) <- lapply(groups, f(x,extract_keywords(x, first_only=T)))
+  names(groups) <- lapply(groups, f(x, extract_keywords(x, first_only=T)))
   features <- groups$FEATURES
   groups$FEATURES <- NULL
   origin <- groups$ORIGIN
