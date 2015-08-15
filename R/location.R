@@ -53,7 +53,7 @@ extract_sequence <- function(loc, dna) {
   if (is.character(loc)) {
     loc <- parse_location(loc)
   }
-  extract <- f(x, extract_location(x, dna))  # for recursion
+  extract <- f(x, extract_sequence(x, dna))  # for recursion
   
   if (loc$operator == "base") {
     subseq(dna, loc$start, loc$end)
