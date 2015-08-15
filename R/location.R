@@ -62,7 +62,7 @@ extract_sequence <- function(loc, dna) {
   } else if (loc$operator == "span") {
     subseq(dna, loc$start, loc$end)
   } else if (loc$operator == "complement") {
-    complement(extract(loc$args[[1]]))  # complement takes a single arg
+    Biostrings::complement(extract(loc$args[[1]])) # complement takes single arg
   } else if (loc$operator == "join") {
     do.call(c, lapply(loc$args, extract))
   } else if (loc$operator == "order") {
