@@ -57,11 +57,11 @@ extract_sequence <- function(loc, dna) {
   extract <- f(x, extract_sequence(x, dna))  # for recursion
   
   if (loc$operator == "base") {
-    subseq(dna, loc$start, loc$end)
+    Biostrings::subseq(dna, loc$start, loc$end)
   } else if (loc$operator == "site") {
-    DNAString("")
+    Biostrings::DNAString("")
   } else if (loc$operator == "span") {
-    subseq(dna, loc$start, loc$end)
+    Biostrings::subseq(dna, loc$start, loc$end)
   } else if (loc$operator == "complement") {
     Biostrings::complement(extract(loc$args[[1]])) # complement takes single arg
   } else if (loc$operator == "join") {
@@ -69,6 +69,6 @@ extract_sequence <- function(loc, dna) {
   } else if (loc$operator == "order") {
     lapply(loc$args, extract)
   } else {
-    DNAString("")
+    Biostrings::DNAString("")
   }
 }
