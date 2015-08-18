@@ -49,6 +49,7 @@ parse_location <- function(l) {
   }
 }
 
+#' @export
 extract_sequence <- function(loc, dna) {
   if (is.character(loc)) {
     loc <- parse_location(loc)

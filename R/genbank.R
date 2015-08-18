@@ -75,15 +75,19 @@ parse_features <- function(features) {
     key <- str_trim(substr(header, 6, 21))
     location_str <- str_trim(substr(header, 22, nchar(header)))
     location <- parse_location(location_str)
-    keys <- str_match(lines, "^/(.+)=")[ ,2]
-    vals <- str_match(lines, "^/.+=(.+)")[ ,2]
-    vals[is.na(vals)] <- lines[is.na(vals)]  # use whole line when continuation
-    keyvals <- join_unkeyed_lines(keys, vals, sep="")
-    ret <- keyvals$values %>% 
-      str_replace("^\"", "") %>% 
-      str_replace("\"$", "") %>%
-      as.list()
-    names(ret) <- keyvals$keys
+    if (length(lines) == 0) {
+      ret <- list()
+    } else {
+      keys <- str_match(lines, "^/(.+)=")[ ,2]
+      vals <- str_match(lines, "^/.+=(.+)")[ ,2]
+      vals[is.na(vals)] <- lines[is.na(vals)]  # use whole line when continuation
+      keyvals <- join_unkeyed_lines(keys, vals, sep="")
+      ret <- keyvals$values %>% 
+        str_replace("^\"", "") %>% 
+        str_replace("\"$", "") %>%
+        as.list()
+      names(ret) <- keyvals$keys
+    }
     ret$key <- key
     ret$location <- location
     ret$location_str <- location_str
@@ -93,6 +97,7 @@ parse_features <- function(features) {
   return(group_lists_by_key(lapply(groups, parse_feature)))
 }
 
+#' @export
 parse_genbank <- function(file) {
   lines <- readLines(file)
   
